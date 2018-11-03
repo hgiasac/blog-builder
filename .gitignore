@@ -8,3 +8,5 @@
 /.purs*
 /.psa*
 /dist
+yarn.lock
+package-lock.json

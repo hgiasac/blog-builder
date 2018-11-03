@@ -7,12 +7,13 @@
     "css-watch": "npm run css-build -- --watch",
     "local": "cd dist && live-server",
     "build-static": "pulp run -I src/common --src-path src/builder --main Builder.Main",
-
     "build-home": "npm run build-home-file && npm run compress-home",
     "build-home-file": "pulp browserify -I src/common --src-path src/home --optimise --to dist/assets/home.js",
-    "compress-home": "uglifyjs ./dist/assets/home.js > ./dist/assets/home.min.js && rm dist/assets/home.js"
+    "compress-home": "uglifyjs ./dist/assets/home.js > ./dist/assets/home.min.js && rm dist/assets/home.js",
+    "postinstall": "bower install"
   },
   "devDependencies": {
+    "bower": "^1.8.4",
     "live-server": "^1.2.0",
     "milligram": "^1.3.0",
     "node-sass": "^4.9.4",

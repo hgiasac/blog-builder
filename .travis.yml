@@ -13,5 +13,6 @@ deploy:
   keep-history: true
   repo: hgiasac/hgiasac.github.io
   local-dir: dist
+  target-branch: master
   on:
     branch: master

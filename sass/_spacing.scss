@@ -1,0 +1,44 @@
+
+$total-spacing: 4 !default;
+$spacing-size: 0.5rem !default;
+
+@for $i from 0 through $total-spacing {
+  $size: $spacing-size * $i;
+  $types: (
+    "p" "padding",
+    "m" "margin"
+  );
+
+  @each $t in $types {
+    
+    .#{nth($t, 1)}-#{$i} {
+      #{nth($t, 2)}: $size !important;
+    }
+
+    .#{nth($t, 1)}t-#{$i} {
+      #{nth($t, 2)}-top: $size !important;
+    }
+
+    .#{nth($t, 1)}b-#{$i} {
+      #{nth($t, 2)}-bottom: $size !important;
+    }
+
+    .#{nth($t, 1)}l-#{$i} {
+      #{nth($t, 2)}-left: $size !important;
+    }
+
+    .#{nth($t, 1)}r-#{$i} {
+      #{nth($t, 2)}-right: $size !important;
+    }
+
+    .#{nth($t, 1)}x-#{$i} {
+      #{nth($t, 2)}-left: $size !important;
+      #{nth($t, 2)}-right: $size !important;
+    }
+
+    .#{nth($t, 1)}y-#{$i} {
+      #{nth($t, 2)}-top: $size !important;
+      #{nth($t, 2)}-bottom: $size !important;
+    }
+  }
+}

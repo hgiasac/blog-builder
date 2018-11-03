@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^4.1.0",
+    "purescript-console": "^4.1.0",
+    "purescript-effect": "^2.0.0",
+    "purescript-node-fs": "^5.0.0",
+    "purescript-markdown-smolder": "https://github.com/hgiasac/purescript-markdown-smolder.git#master",
+    "purescript-css": "https://github.com/slamdata/purescript-css.git#master",
+    "purescript-behaviors": "^7.0.0",
+    "purescript-canvas": "^4.0.0",
+    "purescript-drawing": "^4.0.0",
+    "purescript-web-html": "^1.2.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^4.0.0"
+  }
+}

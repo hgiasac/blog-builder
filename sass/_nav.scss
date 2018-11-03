@@ -1,0 +1,24 @@
+nav {
+
+  ul {
+    list-style: none;
+    margin-bottom: 0;
+  }
+
+  a {
+    color: $color-secondary;
+  }
+
+  &.horizontal {
+
+    text-align: center;
+
+    li {
+      display: inline-block;
+      margin-bottom: 0;
+      padding: 1rem 2rem;
+    }
+
+  }
+
+}

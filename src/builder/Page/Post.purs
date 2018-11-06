@@ -2,6 +2,7 @@ module Page.Post (writePosts) where
   
 import Prelude
 
+import Data.Array (sortBy)
 import Data.Either (Either(..))
 import Data.Foldable (traverse_)
 import Effect (Effect)
@@ -61,7 +62,7 @@ writePostsIndex = writeHtml (Path.concat [distDir, postsDir, "index.html"]) <<< 
 
 writePosts :: Effect Unit
 writePosts = do
-  paths <- readdir pagesSrc
+  paths <- sortBy (flip compare) <$> readdir pagesSrc
   writePostsIndex paths
   traverse_ writeHtmlFromMarkdown paths
   

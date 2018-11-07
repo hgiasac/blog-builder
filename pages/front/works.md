@@ -14,6 +14,7 @@ This is the list of my projects and contributions in open source community, and 
 
 * [Serverless Framework](https://github.com/serverless/serverless) (JavaScript, AWS CloudFormation) -  Implement shared API Gateway feature that can reference many services into one API Gateway and Custom Authorizer for API Gateway. I also write a [blog post](/posts/2017-11-11-Shared-API-Gateway) about this feature
 * [Grafter Http4s Template](https://github.com/hgiasac/grafter-http4s.g8) (Scala, Http4s) - Update template for each HTTP4s version
+* [PureScript MarkDown Smolder](https://github.com/hgiasac/purescript-markdown-smolder) (PureScript) - A simple library for render HTML from Markdown Markups
 * [PureScript Smolder](https://github.com/bodil/purescript-smolder) (PureScript) - A simple combinator library for generating HTML in PureScript, heavily inspired by Haskell's BlazeHtml. I make a fix for safe render HTML string with [W3C specs](https://www.w3.org/TR/html5/syntax.html#writing-html-documents-elements)
 
 ## Work Projects

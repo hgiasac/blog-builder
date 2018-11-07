@@ -2,14 +2,16 @@ module Page.Home (writeHome) where
 
 import Prelude
 
-import Data.Array (sortBy, tail)
-import Data.Maybe (fromMaybe, maybe)
+import Data.Array (sortBy)
+import Data.Array.Partial (tail)
+import Data.Maybe (maybe)
 import Data.String (length)
 import Effect (Effect)
 import Node.Encoding (Encoding(..))
 import Node.FS.Sync (writeTextFile)
 import Node.Path as Path
 import Page.Home.CSS (homeStyle)
+import Partial.Unsafe (unsafePartial)
 import Template.Common (navLinkData, navListMarkup, webTitle)
 import Text.Smolder.HTML (canvas, script)
 import Text.Smolder.HTML as HTML
@@ -29,8 +31,9 @@ homeHead = HTML.head do
     ! HA.content "I am Toan Nguyen, a simple developer who love to code. I currently focus on functional programming"
 
 homeNav :: forall e. Markup e 
-homeNav = navListMarkup "homenav" $ sortBy sortFn (fromMaybe [] (tail navLinkData))
+homeNav = navListMarkup "homenav" $ sortBy sortFn links
   where
+    links = unsafePartial tail (navLinkData <> [["https://github.com/hgiasac", "Github"]])
     sortFn [l1, s1] [l2, s2] = compare (length s1) (length s2) <> compare s1 s2 
     sortFn _ _ = EQ
 

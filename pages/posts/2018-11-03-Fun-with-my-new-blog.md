@@ -1,4 +1,4 @@
-# Fun my my new blog
+# Fun with my new blog
 
 ![Home Desktop](/assets/home-desktop.gif)
 

@@ -5,6 +5,7 @@ This is the list of my projects and contributions in open source community, and 
 ## Personal Projects
 
 * [Personal Blog Builder](https://github.com/hgiasac/blog-builder) (PureScript, Markdown, HTML, SCSS) - A simple static blog without backend. I use Markdown to write blog content, then use PureScript to parse Markdown syntax, render to HTML string with template. This blog is also mixed with static HTML posts that is complicated with external JavaScript libraries and demos.
+* [PureScript MarkDown Smolder](https://github.com/hgiasac/purescript-markdown-smolder) (PureScript) - A simple library for render HTML from Markdown Markups
 * [1Forge Proxy Service](https://github.com/hgiasac/oneforge-proxy) (Scala, Akka HTTP) - A simple proxy service that get exchange rates from 1forge API. Because the free tier only supports 1.000 requests per day, the service need to cache the results for a time span (90 second). The total request will be enough for all day
 * [Cermine Service](https://github.com/hgiasac/cermine-service) (Scala, Finch) - CERMINE is a Java library which smartly extracts metadata and content from PDF files containing academic publications using machine learning. This project is a REST service implementation for CERMINE written in scala.
 * [Uploader API Service](https://github.com/hgiasac/uploader-demo) (Haskell, Scotty, NixOps) - An experiment uploader service writing in Haskell and Continuous Deployment with NixOps 
@@ -14,7 +15,6 @@ This is the list of my projects and contributions in open source community, and 
 
 * [Serverless Framework](https://github.com/serverless/serverless) (JavaScript, AWS CloudFormation) -  Implement shared API Gateway feature that can reference many services into one API Gateway and Custom Authorizer for API Gateway. I also write a [blog post](/posts/2017-11-11-Shared-API-Gateway) about this feature
 * [Grafter Http4s Template](https://github.com/hgiasac/grafter-http4s.g8) (Scala, Http4s) - Update template for each HTTP4s version
-* [PureScript MarkDown Smolder](https://github.com/hgiasac/purescript-markdown-smolder) (PureScript) - A simple library for render HTML from Markdown Markups
 * [PureScript Smolder](https://github.com/bodil/purescript-smolder) (PureScript) - A simple combinator library for generating HTML in PureScript, heavily inspired by Haskell's BlazeHtml. I make a fix for safe render HTML string with [W3C specs](https://www.w3.org/TR/html5/syntax.html#writing-html-documents-elements)
 
 ## Work Projects

@@ -17,10 +17,10 @@ data Person = Person { name :: String, age :: Int }
 -- syntactic sugar to
 data Person = Person String Int 
 
-name :: Person :: String 
+name :: Person -> String 
 name (Person name _) = name
 
-age :: Person :: Int 
+age :: Person -> Int 
 age (Person _ age) = age
 
 -- so, you can create a record in both ways

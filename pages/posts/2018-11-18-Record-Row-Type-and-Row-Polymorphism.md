@@ -92,7 +92,7 @@ It doesn't stop here. The real fun of Row Types is Type-Level Programming, which
 
 PureScript compiler also provides automatically solved type classes for working with row types. They help the code type-safe, generic, reduce duplicated codes, yet take advantage of compiler's power. You can read the documentation at [Pursuit][3]. However, you will be easier to grasp with simple examples.
 
-[purescript-record][4] includes functions for working with records and polymorphic labels. Under the hood, these functions use Foreign Function Inteface (FFI) from JavaScript object, and Row Constraints.
+[purescript-record][4] includes functions for working with records and polymorphic labels. Under the hood, these functions use Foreign Function Interface (FFI) from JavaScript object, and Row Constraints.
 
 `union` function implement `Union` class. It returns record `r3` including properties of both records `r1`, `r2`.
 
@@ -118,7 +118,7 @@ nub $ union { x: 1, y: "y" } { y: 2, z: true }
 ```
 
 **Note**: 
-- Nub is left hand priority. `y :: String` will be kept instead of right `y :: Int`. You have to think oposite if you come from JavaScript land.
+- Nub is left hand priority. `y :: String` will be kept instead of right `y :: Int`. You have to think opposite if you come from JavaScript land.
 - `nub` is used for polymorphism records. In theory, record labels can be duplicated, but not in compiler. That means if you type `{ x: 1, y: "y", y: 2, z: true }`, it can't compile. 
 
 `merge` is the combination of `Union` and `Nub`:
@@ -215,7 +215,7 @@ p :: Record SharedProps_p -> JSX
 p { key: "", about: "", acceptCharset: "", accessKey: "", ... } -- uhh, too long
 ```
 
-Before PureScript support row types, the popular idea is using Array Props to define React properties (Haskel DOM libraries is the same idea). It is still good. The flaw is attributes can be duplicated.
+Before PureScript support row types, the popular idea is using Array Props to define React properties (Haskell DOM libraries is the same idea). It is still good. The flaw is attributes can be duplicated.
 
 Since Row Constraints appearance, the issue has easily been solved.
 
@@ -269,7 +269,7 @@ Yes. There is library [row-types][7]. It is self-explain, right? However, there 
 
 ## Conclusion
 
-Because PureScript is a transpiler, working with FFI is unavoidable. Row Types help us to work with records easily in polymorphic way, Row Types are not only method to work with Record. [purescript-variant] provide similar functions. However, there are more fun things to do with Row family. `RowList` is the cool feature that support generic methodogy to have fun with record. [Justin Woo][9] - a brilliant PureScript contributor - published a list of tutorials and talks about this topic. You can read his essays [here][10]
+Because PureScript is a transpiler, working with FFI is unavoidable. Row Types help us to work with records easily in polymorphic way, Row Types are not only method to work with Record. [purescript-variant] provide similar functions. However, there are more fun things to do with Row family. `RowList` is the cool feature that support generic methodology to have fun with record. [Justin Woo][9] - a brilliant PureScript contributor - published a list of tutorials and talks about this topic. You can read his essays [here][10]
 
 [1]: https://purescript-simple-json.readthedocs.io/en/latest/inferred-record-types.html
 [2]: https://github.com/purescript/documentation/blob/master/language/Types.md

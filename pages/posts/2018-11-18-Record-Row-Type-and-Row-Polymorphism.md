@@ -226,7 +226,7 @@ p
   => Record attrs
 -> JSX
 
-p { className: "text-center" } []
+p { className: "text-center" } [ text "hello world"]
 ```
 [purescript-react-basic][6] takes advantage of row types to make React simple, type-safe and more.
 
@@ -265,11 +265,11 @@ f defaultValues { x = 1 }
 
 ## Does Haskell support Row Types?
 
-Yes. There is library [row-types][7]. It is self-explain, right? However, there are another extensions that works with Record too. Row Types are better in PureScript because it is easy to do with FFI and JavaScript Object. The critical point is performance and complexity. We can't say which one is the best
+Yes. There is library [row-types][7]. It is self-explain, right? However, there are another extensions that works with Record too. Row Types are better in PureScript because it is easy to do with FFI and JavaScript Object. The critical point is performance and complexity. We can't say which one is the best.
 
 ## Conclusion
 
-Because PureScript is a transpiler, working with FFI is unavoidable. Row Types help us to work with records easily in polymorphic way, Row Types are not only method to work with Record. [purescript-variant] provide similar functions. However, there are more fun things to do with Row family. `RowList` is the cool feature that support generic methodology to have fun with record. [Justin Woo][9] - a brilliant PureScript contributor - published a list of tutorials and talks about this topic. You can read his essays [here][10]
+Because PureScript is a transpiler, working with FFI is unavoidable. Row Types help us to work with records easily in polymorphic way, Row Types are not only method to work with Record. [purescript-variant] provide similar functions. However, there are more fun things to do with Row family. `RowList` is the cool feature that support generic methodology to have fun with record. [Justin Woo][9] - a brilliant PureScript contributor - published a list of tutorials and talks about this topic. You can read his posts [here][10]
 
 [1]: https://purescript-simple-json.readthedocs.io/en/latest/inferred-record-types.html
 [2]: https://github.com/purescript/documentation/blob/master/language/Types.md

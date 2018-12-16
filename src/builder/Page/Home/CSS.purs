@@ -34,11 +34,10 @@ leftScreenPosition = 50.0 + minNavWidth
 
 homeStyle :: Maybe String
 homeStyle = renderedSheet $ render $ do 
-  fontFaceSrc $ NonEmpty (FontFaceSrcUrl "https://fonts.googleapis.com/css?family=Roboto:400,500,700" Nothing) []
+  fontFaceSrc $ NonEmpty (FontFaceSrcUrl "https://fonts.googleapis.com/css?family=Roboto:500,700" Nothing) []
   body ? do 
     fontFamily ["Roboto"] (NonEmpty sansSerif [])
     margin (px 0.0) (px 0.0) (px 0.0) (px 0.0)
-    fontWeight $ weight 400.0
   bgSelector ? do
     zIndex 0
     position fixed

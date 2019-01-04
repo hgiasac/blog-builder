@@ -3,6 +3,7 @@ module Template.Common where
 import Prelude
 
 import Data.Date (year)
+import Data.Enum (fromEnum)
 import Data.Foldable (traverse_)
 import Effect (Effect)
 import Effect.Now (nowDate)
@@ -15,7 +16,7 @@ webTitle = "A Simple Developer"
   
 copyright :: Effect String
 copyright = do 
-  currentYear <- year <$> nowDate
+  currentYear <- (fromEnum <<< year) <$> nowDate
   pure $ "© Toan Nguyen 2017-" <> show currentYear
 
 iconLink :: forall e. String -> String -> Markup e

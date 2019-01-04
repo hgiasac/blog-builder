@@ -17,6 +17,7 @@ defaultHead title = HTML.head do
   HTML.meta ! HA.name "viewport" ! HA.content "width=device-width, initial-scale=1"
 
   HTML.title $ text title 
+  HTML.link ! HA.rel "stylesheet" ! HA.href "https://fonts.googleapis.com/css?family=Roboto"
   HTML.link ! HA.rel "stylesheet" ! HA.href ("/" <> assetsDir <> "/main.min.css")
   HTML.link ! HA.rel "stylesheet" ! HA.href "https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css"
 

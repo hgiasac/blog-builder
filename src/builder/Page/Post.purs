@@ -30,7 +30,7 @@ postsList fileNames =
     HTML.ul do 
       traverse_ postLink fileNames
 
-postsIndex :: forall e. Array String -> Markup e 
+postsIndex :: forall e. Array String -> Effect (Markup e) 
 postsIndex fileNames = 
   defaultTemplate "Technical Blog and Notes" "The list of my technical blog posts and writings" do 
     HTML.div ! HA.className "wrapper" $ do
@@ -47,18 +47,20 @@ writeHtmlFromMarkdown p = do
   emd <- toMarkDown postPath
   case emd of 
     Left _ -> pure unit  
-    Right md -> writeHtml distPath $ defaultTemplate (fileNameToTitle p) (getFirstParagraph md) $ do 
-      HTML.div ! HA.className "wrapper" $ 
-        HTML.div ! HA.className "container grid-lg" $ do
-          HTML.hr ! HA.className "mt-2"  
-          HTML.article ! HA.className "article" $ 
-            toMarkup md
+    Right md -> do 
+      markup <- defaultTemplate (fileNameToTitle p) (getFirstParagraph md) $ do 
+        HTML.div ! HA.className "wrapper" $ 
+          HTML.div ! HA.className "container grid-lg" $ do
+            HTML.hr ! HA.className "mt-2"  
+            HTML.article ! HA.className "article" $ 
+              toMarkup md
+      writeHtml distPath markup
   where
     postPath = Path.concat [pagesSrc, p]
     distPath = Path.concat [distDir, postsDir, replaceExtension "html" (fileNameToUri p)]
 
 writePostsIndex :: Array String -> Effect Unit 
-writePostsIndex = writeHtml (Path.concat [distDir, postsDir, "index.html"]) <<< postsIndex 
+writePostsIndex = writeHtml (Path.concat [distDir, postsDir, "index.html"]) <=< postsIndex 
 
 writePosts :: Effect Unit
 writePosts = do

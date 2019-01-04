@@ -2,7 +2,10 @@ module Template.Common where
 
 import Prelude
 
+import Data.Date (year)
 import Data.Foldable (traverse_)
+import Effect (Effect)
+import Effect.Now (nowDate)
 import Text.Smolder.HTML as HTML
 import Text.Smolder.HTML.Attributes as HA
 import Text.Smolder.Markup (Markup, empty, text, (!))
@@ -10,8 +13,10 @@ import Text.Smolder.Markup (Markup, empty, text, (!))
 webTitle :: String 
 webTitle = "A Simple Developer"
   
-copyright :: String
-copyright = "© Toan Nguyen 2017-2018"
+copyright :: Effect String
+copyright = do 
+  currentYear <- year <$> nowDate
+  pure $ "© Toan Nguyen 2017-" <> show currentYear
 
 iconLink :: forall e. String -> String -> Markup e
 iconLink url iconClass = 

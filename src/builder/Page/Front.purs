@@ -29,12 +29,14 @@ writeHtmlFromMarkdown p = do
   emd <- toMarkDown postPath 
   case emd of 
     Left _ -> pure unit 
-    Right md -> writeHtml distPath $ defaultTemplate (webTitle <> " - " <> pageTitle) (getFirstParagraph md) $ do 
-      HTML.div ! HA.className "wrapper" $ 
-        HTML.div ! HA.className "container grid-lg" $ do
-          HTML.hr ! HA.className "mt-2"  
-          HTML.article ! HA.className "article" $ 
-            toMarkup md
+    Right md -> do 
+      markup <- defaultTemplate (webTitle <> " - " <> pageTitle) (getFirstParagraph md) $ do 
+        HTML.div ! HA.className "wrapper" $ 
+          HTML.div ! HA.className "container grid-lg" $ do
+            HTML.hr ! HA.className "mt-2"  
+            HTML.article ! HA.className "article" $ 
+              toMarkup md
+      writeHtml distPath markup
   where
     postPath = Path.concat [frontSrc, p]
     distPath = Path.concat [distDir, replaceExtension "html" p]
@@ -45,3 +47,4 @@ writeFrontPages = do
   paths <- readdir frontSrc
   traverse_ writeHtmlFromMarkdown paths
   
+ 

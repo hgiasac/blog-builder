@@ -16,7 +16,8 @@
     "purescript-behaviors": "^7.0.0",
     "purescript-canvas": "^4.0.0",
     "purescript-drawing": "^4.0.0",
-    "purescript-web-html": "^1.2.0"
+    "purescript-web-html": "^1.2.0",
+    "purescript-now": "^4.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"

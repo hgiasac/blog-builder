@@ -55,7 +55,7 @@ writeHtmlFromMarkdown p = do
             toMarkup md
   where
     postPath = Path.concat [pagesSrc, p]
-    distPath = Path.concat [distDir, postsDir, replaceExtension "html" p]
+    distPath = Path.concat [distDir, postsDir, replaceExtension "html" (fileNameToUri p)]
 
 writePostsIndex :: Array String -> Effect Unit 
 writePostsIndex = writeHtml (Path.concat [distDir, postsDir, "index.html"]) <<< postsIndex 

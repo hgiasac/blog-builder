@@ -16,17 +16,14 @@ stripExtension s = intercalate "." (fromMaybe ss $ init ss)
 replaceExtension :: String -> String -> String 
 replaceExtension ex s = stripExtension s <> "." <> ex
 
-replaceFileName :: String -> Pattern -> Replacement -> String 
-replaceFileName fileName pat repl = title <> " (" <> before <> ")"
-  where 
-    { after, before } = Str.splitAt 10 $ stripExtension fileName
-    title = Str.replaceAll pat repl $ Str.drop 1 after
-
-fileNameToUri :: String -> String 
-fileNameToUri fileName = replaceFileName fileName (Pattern "_") (Replacement "-")
+fileNameToUri :: String -> String
+fileNameToUri = Str.replaceAll (Pattern "_") (Replacement "-")
 
 fileNameToTitle :: String -> String 
-fileNameToTitle fileName = replaceFileName fileName (Pattern "_") (Replacement " ")
+fileNameToTitle fileName = title <> " (" <> before <> ")"
+  where 
+    { after, before } = Str.splitAt 10 $ stripExtension fileName
+    title = Str.replaceAll (Pattern "_") (Replacement " ") $ Str.drop 1 after
 
 stripeSentences :: String -> Int -> String 
 stripeSentences s maxN 

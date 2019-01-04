@@ -14,14 +14,14 @@ import Text.Smolder.HTML as HTML
 import Text.Smolder.HTML.Attributes as HA
 import Text.Smolder.Markup (Markup, (!), text)
 import Utils.Markdown (getFirstParagraph)
-import Utils.String (fileNameToTitle, replaceExtension)
+import Utils.String (fileNameToTitle, fileNameToUri, replaceExtension)
 import Utils.Writer (distDir, postsDir, pagesSrc, toMarkDown, writeHtml)
 
 postLink :: forall e. String -> Markup e 
 postLink fName = HTML.li $ HTML.a ! HA.href url $ text titleName
   where
     titleName = fileNameToTitle fName
-    htmlName = replaceExtension "html" fName
+    htmlName = replaceExtension "html" (fileNameToUri fName)
     url = Path.concat ["/", postsDir, htmlName]
 
 postsList :: forall e. Array String -> Markup e 

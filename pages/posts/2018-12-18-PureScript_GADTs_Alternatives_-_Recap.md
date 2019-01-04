@@ -120,7 +120,7 @@ data Expr a where
 Since PureScript doesn't support existential types in AST, this method is useless.
 
 ```purescript
-data ExprL a = IntConst Int (a ~ Int) 
+data ExprL a = Val Int (a ~ Int) 
               | Add (ExprL Int) (ExprL Int) (a ~ Int)
               | Lambda (ExprL b -> ExprL c) (a ~ (ExprL b -> ExprL c)) -- can't define existential type
               | Apply (forall b c. ExprL (ExprL b -> ExprL c)) (forall b. ExprL b) (forall c. a ~ c) -- nope
@@ -192,9 +192,21 @@ Maybe (LambdaSym repr => repr Int)
 
 Fortunately, PureScript support impredicative polymorphism. We no need to worry about it.
 
+```purescript
+type L = forall repr. Maybe (LambdaSym repr => repr Int)
+
+testR':: L
+testR' = Nothing
+```
+
 ## Conclusion 
 
 Compared to Leibniz, or even GADTs, Tagless Final style has many advantage as well as easy to grasp. It is wide adoption in functional programming world. Tagless Final style is a good alternative to GADTs 
+
+## References
+
+1. [Approximating GADTs in PureScript - Gary Burgess][1]
+2. [Typed Tagless Final Interpreters - Oleg Kiselyov][2]
 
 [1]: http://code.slipthrough.net/2016/08/10/approximating-gadts-in-purescript/
 [2]: https://en.wikipedia.org/wiki/Identity_of_indiscernibles

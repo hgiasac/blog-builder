@@ -26,6 +26,8 @@
 
 ### Tweak Postgres configuration
 
+PostgreSQL's basic configuration is tuned for wide compatibility rather than performance. The default parameters are very undersized for your system. You can read more detail of configuration settings at PostgreSQL Wiki. There are also config generator tools can help us.
+
 - [Tuning Your PostgreSQL Server](https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server)
 - Config generator: [https://pgtune.leopard.in.ua](https://pgtune.leopard.in.ua)
 

@@ -4,10 +4,10 @@
   - [Configuration and Deployment](#configuration-and-deployment)
     - [Tweak Postgres configuration](#tweak-postgres-configuration)
     - [Hasura configuration](#hasura-configuration)
-      - [HASURA_GRAPHQL_PG_CONNECTIONS](#hasuragraphqlpgconnections)
-      - [HASURA_GRAPHQL_CONNECTIONS_PER_READ_REPLICA (Pro)](#hasuragraphqlconnectionsperreadreplica-pro)
-      - [HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_REFETCH_INTERVAL](#hasuragraphqllivequeriesmultiplexedrefetchinterval)
-      - [HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_BATCH_SIZE](#hasuragraphqllivequeriesmultiplexedbatchsize)
+      - [HASURA GRAPHQL PG CONNECTIONS](#hasura-graphql-pg-connections)
+      - [HASURA GRAPHQL CONNECTIONS PER READ REPLICA](#hasura-graphql-connections-per-read-replica)
+      - [HASURA GRAPHQL LIVE QUERIES MULTIPLEXED REFETCH INTERVAL](#hasura-graphql-live-queries-multiplexed-refetch-interval)
+      - [HASURA GRAPHQL LIVE QUERIES MULTIPLEXED BATCH SIZE](#hasura-graphql-live-queries-multiplexed-batch-size)
     - [Scale Hasura](#scale-hasura)
     - [Scale PostgreSQL Servers](#scale-postgresql-servers)
     - [Monitoring](#monitoring)
@@ -33,8 +33,8 @@ PostgreSQL's basic configuration is tuned for wide compatibility rather than per
 
 ### Hasura configuration
 
-#### HASURA_GRAPHQL_PG_CONNECTIONS
-
+#### HASURA GRAPHQL PG CONNECTIONS
+- Environment variable: `HASURA_GRAPHQL_PG_CONNECTIONS`
 - Minimum **2** connections 
 - Default value: **50**
 - Max connections: = Max connections of Postgres - 5 (keep free connections for another services, e.g PGAdmin, metrics tools)
@@ -54,13 +54,17 @@ For example, you server has 4 Core i7 CPU and 1 hard disk should a connection po
 
 For high transaction applications, horizontal scale with multiple GraphQL Engine clusters is best practices. However, you should aware of total connections of all nodes. The number must be lower than max connections of Postgres
 
-#### HASURA_GRAPHQL_CONNECTIONS_PER_READ_REPLICA (Pro)
+#### HASURA GRAPHQL CONNECTIONS PER READ REPLICA
+
+- Environment variable: `HASURA_GRAPHQL_CONNECTIONS_PER_READ_REPLICA`
 
 With Read-replica, Hasura can load balancing multiple databases. However, you will need to balance connection between database nodes too:
 - Master connections (`HASURA_GRAPHQL_PG_CONNECTIONS`) now are used for write only. You can decrease max connections lower if Hasura doesn't write much, or share connections with another Hasura nodes.
 - Currently read-replica connections use one setting for all databases. It can't flexibly configure specific value for each node. Therefore you need to aware of total connections when scaling Hasura to multiple nodes. 
 
-#### HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_REFETCH_INTERVAL
+#### HASURA GRAPHQL LIVE QUERIES MULTIPLEXED REFETCH INTERVAL
+
+- Environment variable: `HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_REFETCH_INTERVAL`
 
 *(Can skip it if you don't use subscription)*
 
@@ -70,8 +74,10 @@ In brief, live query subscribers are grouped with same query and variables. Grap
 
 The smaller interval is, the faster update clients receive. However, everything has a cost. Small interval with large number of subscriptions need high CPU and memory resources. If you don't really need too realtime, the interval can be set longer a bit. In contrast, with small-medium number of subscriptions, default value (1 second) is good enough 
 
-#### HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_BATCH_SIZE
+#### HASURA GRAPHQL LIVE QUERIES MULTIPLEXED BATCH SIZE
 
+- Environment variable: `HASURA_GRAPHQL_LIVE_QUERIES_MULTIPLEXED_BATCH_SIZE`
+  
 *(Can skip it if you don't use subscription)*
 
 Default: 100

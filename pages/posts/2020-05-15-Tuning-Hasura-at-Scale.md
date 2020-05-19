@@ -18,6 +18,7 @@
       - [Connection Pooler](#connection-pooler)
       - [Load Balancer (Pro)](#load-balancer-pro)
     - [Understand your data](#understand-your-data)
+    - [Query tips](#query-tips)
     - [Microservices](#microservices)
     - [Postgres ecosystem](#postgres-ecosystem)
   - [Summary](#summary)
@@ -163,6 +164,14 @@ Fundamental knowledge you should know and practice:
 - Normalize data structure
 - EXPLAIN, ANALYZE
 
+### Query tips
+
+- Avoid too many `_or` conditions. It doesn't utilize table index 
+- `like`, `ilike` is expensive, especially on long text. Use [Full text search](https://hasura.io/blog/full-text-search-with-hasura-graphql-api-postgres/) instead 
+- Pagination is necessary. 
+- Fetching batched multiple queries in one request is useful. However, you shouldn't overuse it. One common case is using aggregate count with data in same pagination query. It is okay for small to medium tables. However, when table size is large, the query will be slow because of entire table query scan
+- Avoid joining too many tables.
+  
 ### Microservices
 
 Hardware has its limit. You have to throw much money to scale servers as well as data optimization. Moreover, Postgres doesn't support master-master replica, so it will be bottleneck if we store all data in one database. Therefore, you can divide you business logic to multiple smaller services, or microservices.

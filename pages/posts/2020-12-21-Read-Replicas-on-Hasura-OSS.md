@@ -25,7 +25,6 @@ Client applications do routing GraphQL requests to 2 endpoints:
 - Metadata is loaded once on startup. New metadata changes aren't reloaded on read-only instance. Therefore you have to restart the container to refresh metadata.
 - Need more works on client applications.
 - Most of functions on Hasura console is unusable. However it isn't problem. We can use the primary console instead.
-- This version is still in experiment, and is only built on v1.3.2.
 
 ## Implementation
 

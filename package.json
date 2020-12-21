@@ -10,7 +10,8 @@
     "build-static": "spago -x builder.dhall run --main Builder.Main",
     "build-home": "npm run build-home-file && npm run compress-home",
     "build-home-file": "spago -x home.dhall bundle-app --to dist/assets/home.js",
-    "compress-home": "uglifyjs ./dist/assets/home.js > ./dist/assets/home.min.js && rm dist/assets/home.js"
+    "compress-home": "uglifyjs ./dist/assets/home.js > ./dist/assets/home.min.js && rm dist/assets/home.js",
+    "test": "echo 'test'"
   },
   "peerDependencies": {
     "spago": "^0.17.0",

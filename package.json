@@ -6,20 +6,19 @@
     "css-build": "node-sass --omit-source-map-url --output-style compressed sass/main.scss dist/assets/main.min.css",
     "css-watch": "npm run css-build -- --watch",
     "local": "cd dist && live-server",
-    "build-static": "pulp run -I src/common --src-path src/builder --main Builder.Main",
+    "build-static": "spago -x builder.dhall run --main Builder.Main",
     "build-home": "npm run build-home-file && npm run compress-home",
-    "build-home-file": "pulp browserify -I src/common --src-path src/home --to dist/assets/home.js",
+    "build-home-file": "spago -x home.dhall bundle-app --to dist/assets/home.js",
     "compress-home": "uglifyjs ./dist/assets/home.js > ./dist/assets/home.min.js && rm dist/assets/home.js",
     "postinstall": "bower install"
   },
   "devDependencies": {
     "bower": "^1.8.8",
     "live-server": "^1.2.1",
-    "milligram": "^1.3.0",
-    "node-sass": "^4.9.4",
-    "pulp": "^14.0.0",
-    "purescript": "^0.12.0",
-    "uglify-js": "^3.9.3"
+    "milligram": "^1.4.1",
+    "node-sass": "^5.0.0",
+    "pulp": "^15.0.0",
+    "uglify-js": "^3.12.1"
   },
   "license": "MIT"
 }

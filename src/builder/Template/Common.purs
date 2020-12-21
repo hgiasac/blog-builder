@@ -27,7 +27,6 @@ iconLink url iconClass =
 navLinkData :: Array (Array String)
 navLinkData = 
   [ ["/", "Home"]
-  , ["/works.html", "Works"]
   , ["/posts", "Posts"]
   , ["/about.html", "About"]
   , ["https://www.visualcv.com/toan-nguyen", "CV"]

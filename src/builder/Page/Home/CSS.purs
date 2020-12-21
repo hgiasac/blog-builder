@@ -1,7 +1,6 @@
 module Page.Home.CSS where
   
-import CSS
-
+import CSS 
 import CSS.Common (none, auto)
 import CSS.ListStyle.Type (listStyleType)
 import CSS.Media as CM

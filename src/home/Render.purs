@@ -115,7 +115,7 @@ scene mouse wdSize = renderBg <> circles where
     fixB 2.0 \b -> 
       integral' 2.0 (unwrap <$> Time.seconds)
         let db = fixB 10.0 \db_ -> 
-          integral' 10.0 (unwrap <$> Time.seconds) (f <$> buttons mouse <*> b <*> db_)
+              integral' 10.0 (unwrap <$> Time.seconds) (f <$> buttons mouse <*> b <*> db_)
         in switcher db (down $> db)
     where 
       f bs s ds | isEmpty bs = -8.0 * (s - 1.0) - ds * 2.0

@@ -1,4 +1,6 @@
-# Multi-node
+# TimescaleDB 2.0 with Hasura Part 2 - Multi-node
+
+![Hasura TimescaleDB](/assets/timescale-hasura.png)
 
 Multi-node is the most interesting feature of version 2.0 that provides the ability to create a cluster of TimescaleDB instances to scale both reads and writes. A multi-node TimescaleDB cluster consists of:
 
@@ -8,13 +10,15 @@ Multi-node is the most interesting feature of version 2.0 that provides the abil
 In this post, I will try setting up this Multi-node feature and run with Hasura.
 
 > This is the second part of series:
-> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-Timescale-2-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
-> - [Part 2 - Multi-node](/posts/2021-01-01-Timescale-2-with-Hasura-Part-2:-Multi-node.html)
-> - [Part 3 - High availability](/posts/2021-01-02-Timescale-2-with-Hasura-Part-3:-High-Availability.html)
+> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
+> - [Part 2 - Multi-node](/posts/2021-01-01-TimescaleDB-2.0-with-Hasura-Part-2:-Multi-node.html)
+> - [Part 3 - High availability](/posts/2021-01-02-TimescaleDB-2.0-with-Hasura-Part-3:-High-Availability.html)
 
-> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescale2-example)
+> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescaledb2-example)
 
 ## Infrastructure setup
+
+![TimescaleDB Multi-node diagram](/assets/timescale-multinode.png)
 
 Cluster requirements:
 - Network infrastructure is ready. The access node have to ensure that it is able to connect to data nodes when adding them.
@@ -25,9 +29,9 @@ There are 3 authentication mechanisms:
   - Password authentication
   - Certificate authentication
 
-In this demo, we will use first mechanism. You can think it is insecure. I don't disagree. However, it will be fine if we place Timescale cluster into private cloud, and expose access node to internet only. Docker environment can emulate it.
+In this demo, we will use first mechanism. You can think it is insecure. I don't disagree. However, it will be fine if we place TimescaleDB cluster into private cloud, and expose access node to internet only. Docker environment can emulate it.
 
-*You can read more detail about authentication in [official Timescale docs](https://docs.timescale.com/latest/getting-started/setup-multi-node-basic/setup-multi-node-auth##node-communication)*
+*You can read more detail about authentication in [official TimescaleDB docs](https://docs.timescale.com/latest/getting-started/setup-multi-node-basic/setup-multi-node-auth##node-communication)*
 
 First of all, we need to register data nodes to the access node. 
 
@@ -75,7 +79,7 @@ SELECT create_distributed_hypertable('conditions', 'time');
 
 Here we encounter another issue. 
 
-![Create Distribution Hypertable Error](/assets/timescaledb-create-distribution-hypertable-error.png)
+![Create Distribution Hypertable Error](/assets/timescale-create-distribution-hypertable-error.png)
 
 Prepared transactions are disabled by default. `timescaledb-tune` doesn't automatically enable this setting too. We have to set it manually.
 
@@ -105,8 +109,6 @@ select * from timescaledb_information.hypertables;
 | public | conditions | postgres | 1 | 2 | f | t | 1 | {timescaledb-data1,timescaledb-data2} | |
 
 You may notice in `is_distributed` column that represent whether this hypertable is distributed or not. On data nodes, this column is `false` or non-distributed. That means if the hypertable is detached, it can work as normal hypertable. 
-
-In contrast, if you have existed hypertable from Timescale 1.x, and want to convert it to distributed hypertable, it is possible. You can register the existing server as data node, then attach the hypertable.
 
 ## Work with data
 
@@ -163,7 +165,7 @@ ALTER TABLE conditions ADD CONSTRAINT conditions_locations_fk
 ```
 
 The foreign key can't be created. Because `locations` table is available in the access node only. Data nodes don't know about it. 
-However, `JOIN` query is worked on the access node. Timescale is smart enough to map relational data.
+However, `JOIN` query is worked on the access node. TimescaleDB is smart enough to map relational data.
 
 ```sql
 SELECT * FROM conditions JOIN locations ON conditions.location = locations.id;
@@ -253,12 +255,12 @@ Beside non-distribution hypertable caveats, distributed hypertable has more down
 - If you create SQL functions, foreign keys,... you have to create them in all data nodes. The access node can't automatically do it for you. 
 - Native replication is still in experiment. 
 
-The root cause is in the access node that can't manage consistent metadata with data nodes yet. It can't automatically sync database structure to data node except distributed hypertables. However, Timescale 2.0 is still in early stage. The caveats still have chance to be solved in next versions.
+The root cause is in the access node that can't manage consistent metadata with data nodes yet. It can't automatically sync database structure to data node except distributed hypertables. However, TimescaleDB 2.0 is still in early stage. The caveats still have chance to be solved in next versions.
 
-You can read more detail in [Timescale docs](https://docs.timescale.com/latest/using-timescaledb/limitations#distributed-hypertable-limitations)
+You can read more detail in [TimescaleDB docs](https://docs.timescale.com/latest/using-timescaledb/limitations#distributed-hypertable-limitations)
 
 ## So, should I use it?
 
 Yes, if you really need to scale write performance, and don't use Continuous aggregate view, compression policies features, at least in near future. In theory, you still can create them manually in each data node, since these hypertables in data nodes are normal one. However this workaround can lead to inconsistent database structures between nodes.
 
-The access node is still a Timescale database server. You still can create tables and local hypertables and use them along with distributed hypertables.
+The access node is still a TimescaleDB server. You still can create tables and local hypertables and use them along with distributed hypertables.

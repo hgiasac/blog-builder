@@ -1,19 +1,19 @@
-# Timescale 2 with Hasura Part 1 - From version 1 to 2.0
+# TimescaleDB 2.0 with Hasura Part 1 - From version 1 to 2.0
 
-![Hasura Timescale](/assets/hasura-timescale.png)
+![Hasura TimescaleDB](/assets/timescale-hasura.png)
 
 As you probably know, [TimescaleDB](https://github.com/timescale/timescaledb) is an open-source database designed to make SQL scalable for time-series data. The most valuable features of TimescaleDB is `hypertable`, a high-level table that provides automatic partitioning across time and space (partitioning key).
 
-Timescale 2.0 is a big major version upgrade that has many improvements from version 1. It introduces new interesting features and capabilities, especially horizontal multi-node scaling that can solve the limitation of write performance.
+TimescaleDB 2.0 is a big major version upgrade that has many improvements from version 1. It introduces new interesting features and capabilities, especially horizontal multi-node scaling that can solve the limitation of write performance.
 
 Because it is a PostgreSQL extension, it mostly works well with Hasura. However, there are several limitations. This article will tells you about known issues and workarounds.
 
 > This is the first part of series:
-> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-Timescale-2-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
-> - [Part 2 - Multi-node](/posts/2021-01-01-Timescale-2-with-Hasura-Part-2:-Multi-node.html)
-> - [Part 3 - High availability](/posts/2021-01-02-Timescale-2-with-Hasura-Part-3:-High-Availability.html)
+> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
+> - [Part 2 - Multi-node](/posts/2021-01-01-TimescaleDB-2.0-with-Hasura-Part-2:-Multi-node.html)
+> - [Part 3 - High availability](/posts/2021-01-02-TimescaleDB-2.0-with-Hasura-Part-3:-High-Availability.html)
 
-> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescale2-example)
+> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescaledb2-example)
 
 ## Migrations and Breaking changes
 
@@ -23,7 +23,7 @@ TimescaleDB SQL API aren't supported by Hasura console. We have to use `Raw SQL`
 
 ### From 1.x to 2.0
 
-The following table shows syntax comparison between Timescale 1.7 and 2.0:
+The following table shows syntax comparison between TimescaleDB 1.7 and 2.0:
 
 | 1.7 | 2.0 | Comment |
 | --- | --- | ------- |
@@ -180,7 +180,7 @@ It isn't impossible to run migration with database driver, if it satisfies both 
 
 Unfortunately it is hard to change GraphQL Engine source code, because it relates to core functionality of the engine. Finally I came up an idea. It is easier to customize the CLI with native Go's lib/pq option.
 
-This is a hack, so it isn't official in the main upstream. You can download the customized CLI [here](https://github.com/hgiasac/graphql-engine/releases), or try it in [the single node example](https://github.com/hgiasac/hasura-timescale2-example/tree/master/single).
+This is a hack, so it isn't official in the main upstream. You can download the customized CLI [here](https://github.com/hgiasac/graphql-engine/releases), or try it in [the single node example](https://github.com/hgiasac/hasura-timescaledb2-example/tree/master/single).
 
 ```sh
 hasura migrate apply --disable-transaction --database-url "<url>"
@@ -192,7 +192,7 @@ There are also caveats:
 
 ## GraphQL
 
-Because Timescale is an extension of Postgres, it is compatible with GraphQL Engine. However, there are several limitations of Timescale that affect Hasura:
+Because TimescaleDB is an extension of Postgres, it is compatible with GraphQL Engine. However, there are several limitations of TimescaleDB that affect Hasura:
 - Hypertable doesn't require Primary key. Therefore `<hypertable_name>_by_pk` queries, mutations and subscriptions are disabled.
 - Upsert isn't support in hypertable.
 - Hypertable doesn't support foreign key. 
@@ -200,18 +200,18 @@ Because Timescale is an extension of Postgres, it is compatible with GraphQL Eng
 
 ## Console and Metadata
 
-Console and metadata works well with Timescale 2.0. However, Continuous Aggregate View can't be deleted by console UI. Behind the scene it requests `DROP VIEW` SQL execution. The correct statement is `DROP MATERIALIZED VIEW`.
+Console and metadata works well with TimescaleDB 2.0. However, Continuous Aggregate View can't be deleted by console UI. Behind the scene it requests `DROP VIEW` SQL execution. The correct statement is `DROP MATERIALIZED VIEW`.
 
 ![Drop materialized view](/assets/drop-materialized-view-error.png)
 
 Due to optional Primary key in hypertable, we can't view detail, update and delete row in data table. 
 
-![Timescale Hasura console data table](/assets/timescale-hasura-console-data.png)
+![TimescaleDB Hasura console data table](/assets/timescale-hasura-console-data.png)
 
-Therefore, most of Timescale features have to run in raw SQL. The console doesn't have many help here.
+Therefore, most of TimescaleDB features have to run in raw SQL. The console doesn't have many help here.
 
 ## Should I upgrade?
 
 Yes, if you aren't afraid of migration breaking changes. The new Continuous Materialized View is also another concern.
 
-Timescale 2.0 is also worth to upgrade with Multi-node scaling solution. We will explore in the next part of series: [Part 2 - Multi-node](/posts/2021-01-01-Timescale-2-with-Hasura-Part-2:-Multi-node.html)
+TimescaleDB 2.0 is also worth to upgrade with Multi-node scaling solution. We will explore in the next part of series: [Part 2 - Multi-node](/posts/2021-01-01-Timescale-2-with-Hasura-Part-2:-Multi-node.html)

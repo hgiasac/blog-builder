@@ -1,15 +1,28 @@
-# Timescale 2 with Hasura Part 3 - High Availability
+# TimescaleDB 2.0 with Hasura Part 3 - High Availability
+
+![Hasura TimescaleDB](/assets/timescale-hasura.png)
+
+ Performance and High availability are critical challenges in production. Although TimescaleDB solves performance problems, we still need to care about remain parts. In this article, I suggest some high availability setup for single-node as well as explore multi-node replication solutions,
 
 > This is the final part of series:
-> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-Timescale-2-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
-> - [Part 2 - Multi-node](/posts/2021-01-01-Timescale-2-with-Hasura-Part-2:-Multi-node.html)
-> - [Part 3 - High availability](/posts/2021-01-02-Timescale-2-with-Hasura-Part-3:-High-Availability.html)
+> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
+> - [Part 2 - Multi-node](/posts/2021-01-01-TimescaleDB-2.0-with-Hasura-Part-2:-Multi-node.html)
+> - [Part 3 - High availability](/posts/2021-01-02-TimescaleDB-2.0-with-Hasura-Part-3:-High-Availability.html)
 
-> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescale2-example)
+> The example code is uploaded on [Github](https://github.com/hgiasac/hasura-timescaledb2-example)
 
-## High availability
+## Single-node
 
-Now we have multi-node cluster. However does it support high availability? If one data node is down, does Timescale cluster still work?
+TimescaleDB is an extension of Postgres, so you can use any replicated solution of Postgres. The common solution is streaming replication, combine with [repmgr](https://repmgr.org/) or [Patroni](https://patroni.readthedocs.io/en/latest) for automatic failover.
+
+If you use Kubernetes, you can install [official helm repository of TimescaleDB](https://github.com/timescale/timescaledb-kubernetes) that use Patroni with 3 nodes by default.
+
+![TimescaleDB single node Kubernetes diagram](/assets/timescale-create-distribution-hypertable-error.png)
+TimescaleDB single node Kubernetes diagram. Source: https://github.com/timescale/timescaledb-kubernetes
+
+## Multi-node
+
+Now we have multi-node cluster. However does it support high availability? If one data node is down, does TimescaleDB cluster still work?
 
 With this test case, I stop data node `timescaledb-data1`, then test several operations:
 - INSERT works. The access node can know status of data nodes , and distribute to alive nodes.
@@ -36,7 +49,7 @@ HINT:  Ensure all chunks on the data node are fully replicated before detaching 
 
 ## Native Replication
 
-Timescale 2.0 provides built-in, native replication support for multi-node. This feature is promising although it is still in development preview.
+TimescaleDB 2.0 provides built-in, native replication support for multi-node. This feature is promising although it is still in development preview.
 We aren't required any additional setup to use native replication. Just need to set `replication_factor` argument with integer value. This argument represents the number of data nodes that the same data is written to. The value must be in between 1 and total data nodes. The default value is 1. 
 
 Let's see how many rows are inserted into 2 data nodes:
@@ -102,6 +115,8 @@ isn't a good choice.
 
 ## Conclusion
 
-Up to now, the best choice for high availability solution for Timescale multi-node feature is streaming replication. For ideal design, every node has 1 replica with fall-over support. 
+Up to now, the best choice for high availability solution for TimescaleDB multi-node feature is streaming replication. For ideal design, every node has 1 replica with failover support. 
 
-Native replication feature is still in active development. It has many issues to improve. At least the query planer should be smarter enough to when to ignore failure data nodes when reading data. Anyway, the replication solution is cool and worth to look forward.
+![TimescaleDB multi-node replication](/assets/timescale-multinode-replication.png)
+
+Native replication feature is still in active development. It has many issues that need to be improved. At least the query planer should be smarter enough to when to ignore failure data nodes when reading data. Anyway, the replication solution is cool and worth to look forward.

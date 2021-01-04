@@ -107,7 +107,7 @@ in  upstream
 
 let upstream =
       https://github.com/purescript/package-sets/releases/download/psc-0.13.8-20201125/packages.dhall sha256:ef58d9afae22d1bc9d83db8c72d0a4eca30ce052ab49bbc44ced2da0bc5cad1a
-  with css.version = "master"
+  with css.version = "e5beb6b16f14e7d4dc10a0bb930c936fe9dde88a"
 
 let additions = {
   markdown =

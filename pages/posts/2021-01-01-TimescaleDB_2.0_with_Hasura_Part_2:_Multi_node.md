@@ -41,7 +41,7 @@ SELECT add_data_node('data1', host => 'timescaledb-data1');
 
 `host` can be IP or DNS name. In docker, you can use alias name. 
 
-> Note: this function requires running in `AUTOCOMMIT` mode. So you can only run it with `psql`, or custom migration CLI. However, I don't recommend using migration, because Multi-node clusters configuration are different if you run multiple development environments (dev, staging, production...)
+> Note: this function requires running in `AUTOCOMMIT` mode. So you can only run it with `psql`, or custom migration CLI. However, I don't recommend using migration, because Multi-node clusters configuration is different if you run multiple development environments (dev, staging, production...)
 
 You can add nodes manually with `psql`. Fortunately the Postgres docker image supports initialization hooks `/docker-entrypoint-initdb.d`. You can use bash script to add them automatically.
 
@@ -62,7 +62,7 @@ Another solutions are:
 
 ## Create Distributed hypertable
 
-Next step, we need to create distributed hypertable instead of normal, or non-distributed hypertable. The difference of Distributed hypertable is, the data is stored across data node instances. The access node stores metadata of data nodes and distributes the requests and queries appropriately to those nodes, then aggregates the results received from them. Non-distributed  `hypertable` still stores data locally in current server.
+Next step, we need to create distributed hypertable instead of normal, non-distributed hypertable. The difference of Distributed hypertable is, the data is stored across data node instances. The access node stores metadata of data nodes and distributes the requests and queries appropriately to those nodes, then aggregates the results received from them. Non-distributed  `hypertable` still stores data locally in current server.
 
 The function is similar to `hypertable`. We run it after creating table
 

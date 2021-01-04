@@ -97,21 +97,13 @@ postgres= select COUNT(*) FROM conditions;
  1000000
 ```
 
-`timescaledb-data1` is still in data nodes list after detached. So in theory we are able to attach again. 
+Unfortunately, we can't attach existing table from data node. What will we do? Drop the table in the data node and attach again? It 
+isn't a good choice.
 
 ```sql
-postgres= SELECT * FROM timescaledb_information.data_nodes;
-     node_name     |  owner   |                      options                       
--------------------+----------+----------------------------------------------------
- timescaledb-data1 | postgres | {host=timescaledb-data1,port=5432,dbname=postgres}
- timescaledb-data2 | postgres | {host=timescaledb-data2,port=5432,dbname=postgres}
-
 postgres= SELECT attach_data_node('timescaledb-data1', 'conditions', if_not_attached => true);
 ERROR:  [timescaledb-data1]: relation "conditions" already exists
 ```
-
-Well, another failure. We can't attach existing table from data node. What will we do? Drop the table in the data node and attach again? It 
-isn't a good choice.
 
 ## Conclusion
 

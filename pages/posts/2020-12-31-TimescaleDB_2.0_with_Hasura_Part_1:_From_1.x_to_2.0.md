@@ -1,4 +1,4 @@
-# TimescaleDB 2.0 with Hasura Part 1 - From version 1 to 2.0
+# TimescaleDB 2.0 with Hasura Part 1 - From 1.x to 2.0
 
 ![Hasura TimescaleDB](/assets/timescale-hasura.png)
 
@@ -8,8 +8,8 @@ TimescaleDB 2.0 is a big major version upgrade that has many improvements from v
 
 Because it is a PostgreSQL extension, it mostly works well with Hasura. However, there are several limitations. This article will tells you about known issues and workarounds.
 
-> This is the first part of series:
-> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
+> This is final part of the series:
+> - [Part 1 - From 1.x to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-1.x-to-2.0.html)
 > - [Part 2 - Multi-node](/posts/2021-01-01-TimescaleDB-2.0-with-Hasura-Part-2:-Multi-node.html)
 > - [Part 3 - High availability](/posts/2021-01-02-TimescaleDB-2.0-with-Hasura-Part-3:-High-Availability.html)
 
@@ -17,11 +17,9 @@ Because it is a PostgreSQL extension, it mostly works well with Hasura. However,
 
 ## Migrations and Breaking changes
 
-### Manual works
-
-TimescaleDB SQL API aren't supported by Hasura console. We have to use `Raw SQL` or create migration manually. In theory `hypertable` is the high level of table, we can create it in console. However, `hypertable` uses timestamp or number column as partition key. It requires including that column as primary key. Therefore we have to ignore primary key or use composite keys, and in practice we choose ignoring it. The issue is, Hasura console forces Primary key on table creation [#6235](https://github.com/hasura/graphql-engine/issues/6235). Manual migration creation is unavoidable.
-
 ### From 1.x to 2.0
+
+To upgrade new version, you can read [the official guide here](https://docs.timescale.com/latest/update-timescaledb/update-tsdb-2)
 
 The following table shows syntax comparison between TimescaleDB 1.7 and 2.0:
 
@@ -198,9 +196,11 @@ Because TimescaleDB is an extension of Postgres, it is compatible with GraphQL E
 - Hypertable doesn't support foreign key. 
 - Although we can create manual relationship between hypertables, the query performance should be considered.
 
-## Console and Metadata
+## Console and Hasura CLI
 
-Console and metadata works well with TimescaleDB 2.0. However, Continuous Aggregate View can't be deleted by console UI. Behind the scene it requests `DROP VIEW` SQL execution. The correct statement is `DROP MATERIALIZED VIEW`.
+TimescaleDB SQL API aren't supported by Hasura console. We have to use `Raw SQL` or create migration manually. In theory `hypertable` is the high level of table, we can create it in console. However, `hypertable` uses timestamp or number column as partition key. It requires including that column as primary key. Therefore we have to ignore primary key or use composite keys, and in practice we choose ignoring it. The issue is, Hasura console forces Primary key on table creation [#6235](https://github.com/hasura/graphql-engine/issues/6235). Manual migration creation is unavoidable.
+
+However, Continuous Aggregate View can't be deleted by console UI. Behind the scene it requests `DROP VIEW` SQL execution. The correct statement is `DROP MATERIALIZED VIEW`.
 
 ![Drop materialized view](/assets/drop-materialized-view-error.png)
 
@@ -208,7 +208,7 @@ Due to optional Primary key in hypertable, we can't view detail, update and dele
 
 ![TimescaleDB Hasura console data table](/assets/timescale-hasura-console-data.png)
 
-Therefore, most of TimescaleDB features have to run in raw SQL. The console doesn't have many help here.
+Therefore, most of TimescaleDB functions have to be run in raw SQL. The console doesn't have many help here.
 
 ## Should I upgrade?
 

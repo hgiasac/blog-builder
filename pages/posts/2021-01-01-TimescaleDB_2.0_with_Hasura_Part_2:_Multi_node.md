@@ -9,8 +9,8 @@ Multi-node is the most interesting feature of version 2.0 that provides the abil
 
 In this post, I will try setting up this Multi-node feature and run with Hasura.
 
-> This is the second part of series:
-> - [Part 1 - From version 1 to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-Version-1-to-2.0.html)
+> This is final part of the series:
+> - [Part 1 - From 1.x to 2.0](/posts/2020-12-31-TimescaleDB-2.0-with-Hasura-Part-1:-From-1.x-to-2.0.html)
 > - [Part 2 - Multi-node](/posts/2021-01-01-TimescaleDB-2.0-with-Hasura-Part-2:-Multi-node.html)
 > - [Part 3 - High availability](/posts/2021-01-02-TimescaleDB-2.0-with-Hasura-Part-3:-High-Availability.html)
 

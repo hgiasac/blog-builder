@@ -4,8 +4,6 @@
 
 If you are familiar with GraphQL, this buzzword isn't new. In brief, GraphQL Federation is a microservices architecture for GraphQL that splits a monolithic graph into multiple smaller GraphQL services. 
 
-Benefit
-
 ## Challenges
 
 ### Schema conflicts
@@ -24,6 +22,7 @@ In theory, it is possible if GraphQL gateway can rename schema types. However it
 
 To avoid this issue, the best practice is having an API architect who coordinates with all development teams and designs unified, high level API documentation. However, sometimes it is unavoidable. There are cases that we need to integrate with third party graphs with unpredicted conflicts. Gatsby is an example with multiple GraphQL data source plugins.
 
+### Subscription
 ### Multi-layer authorization
 
 ### Tracing

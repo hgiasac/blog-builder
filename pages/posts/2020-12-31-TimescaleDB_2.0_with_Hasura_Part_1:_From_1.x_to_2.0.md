@@ -192,9 +192,11 @@ There are also caveats:
 
 Because TimescaleDB is an extension of Postgres, it is compatible with GraphQL Engine. However, there are several limitations of TimescaleDB that affect Hasura:
 - Hypertable doesn't require Primary key. Therefore `<hypertable_name>_by_pk` queries, mutations and subscriptions are disabled.
-- Upsert isn't support in hypertable.
-- Hypertable doesn't support foreign key. 
+- GraphQL Engine doesn't support `UPSERT` for `hypertable`. In fact, [TimescaleDB supports UPSERT](https://docs.timescale.com/latest/using-timescaledb/writing-data#upsert), but with infer indexes only. Meanwhile popular Postgres query builder engines, ORMs use ON CONFLICT ON CONSTRAINT constraint_name statement.
+- Foreign key can't be point into a hypertable (although that data model isn't very common).  The common is for the hypertable to have a foreign key to point to a relational table (think an object_id in the time-series is a Foreign Key to a metadata table about the object).
 - Although we can create manual relationship between hypertables, the query performance should be considered.
+
+(Thank Mike Freedman ([@michaelfreedman](https://twitter.com/michaelfreedman)) for the feedback)
 
 ## Console and Hasura CLI
 

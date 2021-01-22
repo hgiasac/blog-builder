@@ -1,6 +1,6 @@
 # TimescaleDB 2.0 with Hasura Part 2 - Multi-node
 
-![Hasura TimescaleDB](/assets/timescale-hasura.png)
+![Hasura TimescaleDB](/assets/timescaledb/timescale-hasura.png)
 
 Multi-node is the most interesting feature of version 2.0 that provides the ability to create a cluster of TimescaleDB instances to scale both reads and writes. A multi-node TimescaleDB cluster consists of:
 
@@ -18,7 +18,7 @@ In this post, I will try setting up this Multi-node feature and run with Hasura.
 
 ## Infrastructure setup
 
-![TimescaleDB Multi-node diagram](/assets/timescale-multinode.png)
+![TimescaleDB Multi-node diagram](/assets/timescaledb/timescale-multinode.png)
 
 Cluster requirements:
 - Network infrastructure is ready. The access node have to ensure that it is able to connect to data nodes when adding them.
@@ -79,7 +79,7 @@ SELECT create_distributed_hypertable('conditions', 'time');
 
 Here we encounter another issue. 
 
-![Create Distribution Hypertable Error](/assets/timescale-create-distribution-hypertable-error.png)
+![Create Distribution Hypertable Error](/assets/timescaledb/timescale-create-distribution-hypertable-error.png)
 
 Prepared transactions are disabled by default. `timescaledb-tune` doesn't automatically enable this setting too. We have to set it manually.
 
@@ -236,15 +236,15 @@ There are more limitations that you can see in [Caveats](#caveats) section.
 
 It isn't different from original Postgres. GraphQL Engine service only needs connecting to the access node's database URL. There are still issues that are similar to non-distributed `hypertable`. View, SQL query function works as expected.
 
-![Hasura Graphql Engine Console data](/assets/timescale-hasura-console-data.png)
+![Hasura Graphql Engine Console data](/assets/timescaledb/timescale-hasura-console-data.png)
 
-![Hasura Graphql Engine Console Query](/assets/timescale-hasura-console-graphql.png)
+![Hasura Graphql Engine Console Query](/assets/timescaledb/timescale-hasura-console-graphql.png)
 
 However, because Foreign key doesn't work on distributed hypertable, GraphQL Engine can't automatically suggest relationship. You have to define manually.
 
-![Manual Relationship](/assets/timescale-hasura-relationship-create.png)
+![Manual Relationship](/assets/timescaledb/timescale-hasura-relationship-create.png)
 
-![Relationship Query](/assets/timescale-hasura-relationship-query.png)
+![Relationship Query](/assets/timescaledb/timescale-hasura-relationship-query.png)
 
 ## Caveats
 

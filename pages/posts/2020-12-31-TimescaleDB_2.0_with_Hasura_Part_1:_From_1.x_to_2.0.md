@@ -1,6 +1,6 @@
 # TimescaleDB 2.0 with Hasura Part 1 - From 1.x to 2.0
 
-![Hasura TimescaleDB](/assets/timescale-hasura.png)
+![Hasura TimescaleDB](/assets/timescaledb/timescale-hasura.png)
 
 As you probably know, [TimescaleDB](https://github.com/timescale/timescaledb) is an open-source database designed to make SQL scalable for time-series data. The most valuable features of TimescaleDB is `hypertable`, a high-level table that provides automatic partitioning across time and space (partitioning key).
 
@@ -204,11 +204,11 @@ TimescaleDB SQL API aren't supported by Hasura console. We have to use `Raw SQL`
 
 However, Continuous Aggregate View can't be deleted by console UI. Behind the scene it requests `DROP VIEW` SQL execution. The correct statement is `DROP MATERIALIZED VIEW`.
 
-![Drop materialized view](/assets/drop-materialized-view-error.png)
+![Drop materialized view](/assets/timescaledb/drop-materialized-view-error.png)
 
 Due to optional Primary key in hypertable, we can't view detail, update and delete row in data table. 
 
-![TimescaleDB Hasura console data table](/assets/timescale-hasura-console-data.png)
+![TimescaleDB Hasura console data table](/assets/timescaledb/timescale-hasura-console-data.png)
 
 Therefore, most of TimescaleDB functions have to be run in raw SQL. The console doesn't have many help here.
 

@@ -1,6 +1,6 @@
 # TimescaleDB 2.0 with Hasura Part 3 - High Availability
 
-![Hasura TimescaleDB](/assets/timescale-hasura.png)
+![Hasura TimescaleDB](/assets/timescaledb/timescale-hasura.png)
 
  Performance and High availability are critical challenges in production. Although TimescaleDB solves performance problems, we still need to care about remain parts. In this article, I suggest some high availability setup for single-node as well as explore multi-node replication solutions,
 
@@ -17,8 +17,14 @@ TimescaleDB is an extension of Postgres, so you can use any replicated solution 
 
 If you use Kubernetes, you can install [official helm repository of TimescaleDB](https://github.com/timescale/timescaledb-kubernetes) that use Patroni with 3 nodes by default.
 
-![TimescaleDB single node Kubernetes diagram](/assets/timescale-create-distribution-hypertable-error.png)
+![TimescaleDB single node Kubernetes diagram](/assets/timescaledb/timescale-create-distribution-hypertable-error.png)
 TimescaleDB single node Kubernetes diagram. Source: https://github.com/timescale/timescaledb-kubernetes
+
+[Timescale Cloud](https://www.timescale.com/cloud) and [Timescale Forge](https://forge.timescale.com/) are also great options. You can deploy high availability cluster easily with several clicks, and no worry about system management.
+
+Hasura works well with TimescaleDB replication. However, it's better to use Hasura Cloud/Pro to take advantage of [read replicas](https://hasura.io/docs/1.0/graphql/cloud/read-replicas.html). Hasura Cloud can load balance queries and subscriptions across read replicas while sending all mutations and metadata API calls to the master.
+
+![TimescaleDB single-node replication](/assets/timescaledb/timescale-single-replication.png) 
 
 ## Multi-node
 
@@ -105,10 +111,22 @@ postgres= SELECT attach_data_node('timescaledb-data1', 'conditions', if_not_atta
 ERROR:  [timescaledb-data1]: relation "conditions" already exists
 ```
 
-## Conclusion
-
 Up to now, the best choice for high availability solution for TimescaleDB multi-node feature is streaming replication. For ideal design, every node has 1 replica with failover support. 
 
-![TimescaleDB multi-node replication](/assets/timescale-multinode-replication.png)
+![TimescaleDB multi-node replication](/assets/timescaledb/timescale-multinode-replication.png)
+
+You also can sign up [Timescale Forge](https://docs.timescale.com/latest/getting-started/exploring-forge/forge-multi-node) to deploy Multi-node. At least with enterprise supports, Timescale team can help you solve many replication problems.
+
+## Caveats
+
+The common limitation of replication is data latency between master and replicas, especially when the master node received large amount of write requests. Although we can set synchronous replication mode, it isn't recommended. Write performance will be degrade radically. However it is acceptable if you don't requires real-time metrics.
+
+Because of asynchronous replication, schema sync is also a problem. Sometimes we create a table on master, but it doesn't exist on replicas. In that case, there isn't another option than waiting and even reload metadata on GraphQL Engine.
+
+## Conclusion
+
+TimescaleDB single-node replication isn't different from vanilla Postgres. TimescaleDB team also provides high availability templates for common deployment system (Kubernetes) as cloud solutions, depending on our use cases.
 
 Native replication feature is still in active development. It has many issues that need to be improved. At least the query planer should be smarter enough to when to ignore failure data nodes when reading data. Anyway, the replication solution is cool and worth to look forward.
+
+You can give Hasura Cloud a try to enable Read Replicas's power. Unfortunately current OSS version doesn't support this feature. However, there will be fun things to play with read replicas with upcoming versions. Let's keep in touch with [Hasura blog](https://hasura.io/blog/) and [Events](https://hasura.io/events/) for new plans and cool demos about Hasura!

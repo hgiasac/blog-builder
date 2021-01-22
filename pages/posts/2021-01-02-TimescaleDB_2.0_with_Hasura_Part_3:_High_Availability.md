@@ -17,14 +17,11 @@ TimescaleDB is an extension of Postgres, so you can use any replicated solution 
 
 If you use Kubernetes, you can install [official helm repository of TimescaleDB](https://github.com/timescale/timescaledb-kubernetes) that use Patroni with 3 nodes by default.
 
-![TimescaleDB single node Kubernetes diagram](/assets/timescaledb/timescale-create-distribution-hypertable-error.png)
-TimescaleDB single node Kubernetes diagram. Source: https://github.com/timescale/timescaledb-kubernetes
+![TimescaleDB single-node replication](/assets/timescaledb/timescale-single-replication.png) 
 
 [Timescale Cloud](https://www.timescale.com/cloud) and [Timescale Forge](https://forge.timescale.com/) are also great options. You can deploy high availability cluster easily with several clicks, and no worry about system management.
 
 Hasura works well with TimescaleDB replication. However, it's better to use Hasura Cloud/Pro to take advantage of [read replicas](https://hasura.io/docs/1.0/graphql/cloud/read-replicas.html). Hasura Cloud can load balance queries and subscriptions across read replicas while sending all mutations and metadata API calls to the master.
-
-![TimescaleDB single-node replication](/assets/timescaledb/timescale-single-replication.png) 
 
 ## Multi-node
 
@@ -119,9 +116,11 @@ You also can sign up [Timescale Forge](https://docs.timescale.com/latest/getting
 
 ## Caveats
 
-The common limitation of replication is data latency between master and replicas, especially when the master node received large amount of write requests. Although we can set synchronous replication mode, it isn't recommended. Write performance will be degrade radically. However it is acceptable if you don't requires real-time metrics.
+The common limitation of single-node replication is data latency between master and replicas, especially when the master node received large amount of write requests. Although we can set synchronous replication mode, it isn't recommended. Write performance will be degrade radically. However it is acceptable if you don't requires real-time metrics.
 
-Because of asynchronous replication, schema sync is also a problem. Sometimes we create a table on master, but it doesn't exist on replicas. In that case, there isn't another option than waiting and even reload metadata on GraphQL Engine.
+The limitation is solved on multi-node and distributed hypertable. The access node doesn't store data. It's just a load balancer, and connect to master data nodes only. So query results are consistent on whatever replica access node. However, the latency still exists if you use non-distributed hypertable as well vanilla table on the access node.
+
+Because of asynchronous replication, schema sync is also a problem. Sometimes we create a table on master, but it doesn't exist on replicas. In that case, there isn't another option than waiting and even reloading metadata on GraphQL Engine.
 
 ## Conclusion
 

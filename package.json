@@ -16,7 +16,7 @@
   "devDependencies": {
     "live-server": "^1.2.1",
     "milligram": "^1.4.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "purescript": "^0.13.8",
     "spago": "^0.17.0",
     "uglify-js": "^3.12.1"
